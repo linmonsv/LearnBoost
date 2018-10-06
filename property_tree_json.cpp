@@ -228,6 +228,36 @@ int ParseJson_3()
     return 0;
 }
 
+int InsertJson()
+{
+    using namespace boost::property_tree;
+
+    ptree pt;
+
+    pt.put("signalType", "TEST");
+
+    ptree exif_array;
+    ptree array1, array2, array3;
+    array1.put("id", "id_test_1");
+    array1.put("value", "value_test_1");
+    array2.put("id", "id_test_2");
+    array2.put("value", "value_test_2");
+    array3.put("id", "id_test_3");
+    array3.put("value", "value_test_3");
+    exif_array.push_back(std::make_pair("", array1));
+    exif_array.push_back(std::make_pair("", array2));
+    exif_array.push_back(std::make_pair("", array3));
+
+    pt.put_child("signalData", exif_array);
+
+    std::stringstream s2;
+    write_json(s2, pt);
+    std::string outstr = s2.str();
+    std::cout << "outstr : " << outstr << std::endl;
+
+    return 0;
+}
+
 int main()
 {
     ParseJson();
@@ -235,6 +265,8 @@ int main()
     ParseJson_2();
 
     ParseJson_3();
+
+    InsertJson();
 
     return 0;
 }
